@@ -3,7 +3,7 @@
   "include": [],
   "references": [
     {
-      "path": "./packages/chat-coordinator-worker"
+      "path": "./packages/Chat-math-worker"
     },
     {
       "path": "./packages/build"

@@ -1,10 +1,10 @@
 {
-  "name": "@lvce-editor/chat-coordinator-worker",
+  "name": "@lvce-editor/Chat-math-worker",
   "version": "0.0.0-dev",
-  "description": "Chat Coordinator Worker",
+  "description": "Chat Math Worker",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lvce-editor/chat-coordinator-worker.git"
+    "url": "git+https://github.com/lvce-editor/Chat-math-worker.git"
   },
   "license": "MIT",
   "author": "Lvce Editor",

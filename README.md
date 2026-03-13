@@ -1,3 +1,3 @@
-# Chat Coordinator Worker
+# Chat Math Worker
 
-WebWorker for the Chat Coordinator functionality in Lvce Editor.
+WebWorker for the Chat Math functionality in Lvce Editor.
