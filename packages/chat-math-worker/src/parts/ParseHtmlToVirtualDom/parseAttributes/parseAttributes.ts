@@ -1,11 +1,13 @@
 import { decodeEntities } from '../decodeEntities/decodeEntities.ts'
 
 const attributeRegex = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g
+const openingTagRegex = /^<\/?\s*[a-zA-Z][\w:-]*/
+const closingBracketRegex = /\/?\s*>$/
 
 export const parseAttributes = (token: string): Record<string, string> => {
   const withoutTag = token
-    .replace(/^<\/?\s*[a-zA-Z][\w:-]*/, '')
-    .replace(/\/?\s*>$/, '')
+    .replace(openingTagRegex, '')
+    .replace(closingBracketRegex, '')
     .trim()
 
   if (!withoutTag) {

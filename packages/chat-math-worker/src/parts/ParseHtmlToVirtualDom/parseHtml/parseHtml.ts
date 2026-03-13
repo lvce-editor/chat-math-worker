@@ -5,6 +5,7 @@ import { parseAttributes } from '../parseAttributes/parseAttributes.ts'
 import { sanitizeHtml } from '../sanitizeHtml/sanitizeHtml.ts'
 
 const tokenRegex = /<!--[\s\S]*?-->|<\/?[a-zA-Z][\w:-]*(?:\s[^<>]*?)?>|[^<]+/g
+const openTagNameRegex = /^<\s*([a-zA-Z][\w:-]*)/
 const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])
 
 export const parseHtml = (value: string): readonly HtmlNode[] => {
@@ -43,7 +44,7 @@ export const parseHtml = (value: string): readonly HtmlNode[] => {
     }
 
     if (token.startsWith('<')) {
-      const openTagNameMatch = /^<\s*([a-zA-Z][\w:-]*)/.exec(token)
+      const openTagNameMatch = openTagNameRegex.exec(token)
       if (!openTagNameMatch) {
         continue
       }
