@@ -96,7 +96,9 @@ test('getMathBlockDom includes katex-display class in rendered block output', ()
     type: 'math-block',
   })
 
-  const hasKatexDisplayNode = result.some((node) => 'className' in node && typeof node.className === 'string' && node.className.includes('katex-display'))
+  const hasKatexDisplayNode = result.some(
+    (node) => 'className' in node && typeof node.className === 'string' && node.className.includes('katex-display'),
+  )
   expect(hasKatexDisplayNode).toBe(true)
 })
 
