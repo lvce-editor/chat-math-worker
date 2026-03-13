@@ -11,6 +11,7 @@
     "isolatedModules": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
     "strict": true,
+    "skipLibCheck": true,
     "exactOptionalPropertyTypes": true,
     "noImplicitAny": true,
     "composite": true,
