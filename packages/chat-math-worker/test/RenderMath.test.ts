@@ -37,9 +37,7 @@ test('renderMath renders display expressions with katex-display output', () => {
 
   expect(result).toBeDefined()
   expect(result?.rootChildCount).toBe(1)
-  expect(getClassNames(result?.virtualDom ?? [])).toEqual(
-    expect.arrayContaining(['katex-display', 'katex', 'katex-mathml', 'katex-html']),
-  )
+  expect(getClassNames(result?.virtualDom ?? [])).toEqual(expect.arrayContaining(['katex-display', 'katex', 'katex-mathml', 'katex-html']))
   expect(getTextNodes(result?.virtualDom ?? [])).toContain(expression)
 })
 
