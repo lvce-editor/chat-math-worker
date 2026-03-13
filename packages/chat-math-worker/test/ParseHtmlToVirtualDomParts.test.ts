@@ -74,7 +74,7 @@ test('parseHtml should return an empty array for empty input', () => {
 })
 
 test('parseHtml should handle void elements self closing tags and mismatched closing tags', () => {
-  const result = parseHtml('<div><img src="https://example.com/image.png"><br/>Tom &amp; Jerry</span></div>')
+  const result = parseHtml('<div><img src="https://example.com/image.png" /><br>Tom &amp; Jerry</span></div>')
 
   expect(result).toEqual([
     {
