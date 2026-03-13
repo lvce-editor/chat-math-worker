@@ -1,4 +1,5 @@
-import { getMathBlockDom, getMathInlineDom } from '../GetMathDom/GetMathDom.ts'
+import { getMathBlockDom } from '../GetMathBlockDom/GetMathBlockDom.ts'
+import { getMathInlineDom } from '../GetMathInlineDom/GetMathInlineDom.ts'
 import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
 
 export const commandMap = {
