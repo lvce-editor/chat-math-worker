@@ -27,7 +27,7 @@
 // const content = await readFile(rendererWorkerMainPath, 'utf-8')
 
 // const chatViewWorkerPath = join(root, '.tmp/dist/dist/chatViewWorkerMain.js')
-// const chatCoordinatorWorkerPath = join(root, '.tmp/dist-Chat-math-worker/dist/chatCoordinatorWorkerMain.js')
+// const chatCoordinatorWorkerPath = join(root, '.tmp/dist-chat-math-worker/dist/chatCoordinatorWorkerMain.js')
 
 // const replaceWorkerUrl = (currentContent, variableName, packageName, workerMainName, localPath) => {
 //   const remoteUrl = getRemoteUrl(localPath)
@@ -42,7 +42,7 @@
 
 // let newContent = content
 // newContent = replaceWorkerUrl(newContent, 'chatViewWorkerUrl', 'chat-view', 'chatViewWorkerMain.js', chatViewWorkerPath)
-// newContent = replaceWorkerUrl(newContent, 'chatCoordinatorWorkerUrl', 'Chat-math-worker', 'chatCoordinatorWorkerMain.js', chatCoordinatorWorkerPath)
+// newContent = replaceWorkerUrl(newContent, 'chatCoordinatorWorkerUrl', 'chat-math-worker', 'chatCoordinatorWorkerMain.js', chatCoordinatorWorkerPath)
 
 // if (newContent !== content) {
 //   await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')

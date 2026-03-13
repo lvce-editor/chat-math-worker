@@ -1,12 +1,12 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'Chat-math-worker.filter-events'
+export const name = 'chat-math-worker.filter-events'
 
 export const skip = 1
 
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'Chat-math://e2e-session-filter')
+  await Command.execute('Main.openUri', 'chat-math://e2e-session-filter')
   await expect(Locator('.chatCoordinator')).toBeVisible()
 
   const events = [
