@@ -50,9 +50,126 @@ test('normalizeUrl should keep only http(s) urls', () => {
   expect(normalizeUrl('javascript:alert(1)')).toBe('#')
 })
 
+test('parseAttributes should support single quoted unquoted and boolean attributes', () => {
+  const result = parseAttributes("<input VALUE=test title='Tom &amp; Jerry' disabled readonly onFocus=\"x\">")
+
+  expect(result).toEqual({
+    disabled: '',
+    readonly: '',
+    title: 'Tom & Jerry',
+    value: 'test',
+  })
+})
+
+test('parseAttributes should return an empty object when there are no attributes', () => {
+  const result = parseAttributes('<div>')
+
+  expect(result).toEqual(Object.create(null))
+})
+
+test('parseHtml should return an empty array for empty input', () => {
+  const result = parseHtml('')
+
+  expect(result).toEqual([])
+})
+
+test('parseHtml should handle void elements self closing tags and mismatched closing tags', () => {
+  const result = parseHtml('<div><img src="https://example.com/image.png"><br/>Tom &amp; Jerry</span></div>')
+
+  expect(result).toEqual([
+    {
+      attributes: Object.create(null),
+      children: [
+        {
+          attributes: {
+            src: 'https://example.com/image.png',
+          },
+          children: [],
+          tagName: 'img',
+          type: 'element',
+        },
+        {
+          attributes: Object.create(null),
+          children: [],
+          tagName: 'br',
+          type: 'element',
+        },
+        {
+          type: 'text',
+          value: 'Tom & Jerry',
+        },
+      ],
+      tagName: 'div',
+      type: 'element',
+    },
+  ])
+})
+
+test('getElementType should map all supported html tags', () => {
+  const cases = [
+    ['a', VirtualDomElements.A],
+    ['abbr', VirtualDomElements.Abbr],
+    ['article', VirtualDomElements.Article],
+    ['aside', VirtualDomElements.Aside],
+    ['audio', VirtualDomElements.Audio],
+    ['br', VirtualDomElements.Br],
+    ['button', VirtualDomElements.Button],
+    ['code', VirtualDomElements.Code],
+    ['col', VirtualDomElements.Col],
+    ['colgroup', VirtualDomElements.ColGroup],
+    ['dd', VirtualDomElements.Dd],
+    ['dl', VirtualDomElements.Dl],
+    ['dt', VirtualDomElements.Dt],
+    ['em', VirtualDomElements.Em],
+    ['figcaption', VirtualDomElements.Figcaption],
+    ['figure', VirtualDomElements.Figure],
+    ['footer', VirtualDomElements.Footer],
+    ['h1', VirtualDomElements.H1],
+    ['h2', VirtualDomElements.H2],
+    ['h3', VirtualDomElements.H3],
+    ['h4', VirtualDomElements.H4],
+    ['h5', VirtualDomElements.H5],
+    ['h6', VirtualDomElements.H6],
+    ['header', VirtualDomElements.Header],
+    ['hr', VirtualDomElements.Hr],
+    ['i', VirtualDomElements.I],
+    ['img', VirtualDomElements.Img],
+    ['input', VirtualDomElements.Input],
+    ['label', VirtualDomElements.Label],
+    ['li', VirtualDomElements.Li],
+    ['main', VirtualDomElements.Main],
+    ['nav', VirtualDomElements.Nav],
+    ['ol', VirtualDomElements.Ol],
+    ['option', VirtualDomElements.Option],
+    ['p', VirtualDomElements.P],
+    ['pre', VirtualDomElements.Pre],
+    ['section', VirtualDomElements.Section],
+    ['select', VirtualDomElements.Select],
+    ['span', VirtualDomElements.Span],
+    ['strong', VirtualDomElements.Strong],
+    ['table', VirtualDomElements.Table],
+    ['tbody', VirtualDomElements.TBody],
+    ['td', VirtualDomElements.Td],
+    ['textarea', VirtualDomElements.TextArea],
+    ['tfoot', VirtualDomElements.Tfoot],
+    ['th', VirtualDomElements.Th],
+    ['thead', VirtualDomElements.THead],
+    ['tr', VirtualDomElements.Tr],
+    ['ul', VirtualDomElements.Ul],
+  ] as const
+
+  for (const [tagName, expected] of cases) {
+    expect(getElementType(tagName)).toBe(expected)
+  }
+})
+
 test('getElementType should map known and fallback tags', () => {
   expect(getElementType('table')).toBe(VirtualDomElements.Table)
   expect(getElementType('b')).toBe(VirtualDomElements.Span)
+  expect(getElementType('small')).toBe(VirtualDomElements.Span)
+  expect(getElementType('sub')).toBe(VirtualDomElements.Span)
+  expect(getElementType('sup')).toBe(VirtualDomElements.Span)
+  expect(getElementType('u')).toBe(VirtualDomElements.Span)
   expect(getElementType('custom-tag')).toBe(VirtualDomElements.Div)
 })
 
@@ -79,6 +196,70 @@ test('getElementAttributes should map and sanitize element attributes', () => {
     readOnly: true,
     src: 'https://example.com/image.png',
   })
+})
+
+test('getElementAttributes should map the remaining supported attributes', () => {
+  const result = getElementAttributes({
+    attributes: {
+      classname: 'card',
+      id: 'item-1',
+      name: 'email',
+      placeholder: 'name@example.com',
+      rel: 'noopener',
+      style: 'display:block',
+      target: '_blank',
+      title: 'Email',
+      value: 'user@example.com',
+    },
+    children: [],
+    tagName: 'input',
+    type: 'element',
+  })
+
+  expect(result).toEqual({
+    className: 'card',
+    id: 'item-1',
+    name: 'email',
+    placeholder: 'name@example.com',
+    rel: 'noopener',
+    style: 'display:block',
+    target: '_blank',
+    title: 'Email',
+    value: 'user@example.com',
+  })
+})
+
+test('getElementAttributes should treat present boolean attributes as true by default', () => {
+  const result = getElementAttributes({
+    attributes: {
+      checked: '',
+      disabled: '',
+      readonly: '',
+    },
+    children: [],
+    tagName: 'input',
+    type: 'element',
+  })
+
+  expect(result).toEqual({
+    checked: true,
+    disabled: true,
+    readOnly: true,
+  })
+})
+
+test('getElementAttributes should return an empty object for unsupported attributes', () => {
+  const result = getElementAttributes({
+    attributes: {
+      alt: 'Preview',
+      role: 'button',
+    },
+    children: [],
+    tagName: 'img',
+    type: 'element',
+  })
+
+  expect(result).toEqual({})
 })
 
 test('toVirtualDom should flatten nodes in pre-order', () => {
