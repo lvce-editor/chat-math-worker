@@ -5,10 +5,7 @@ const openingTagRegex = /^<\/?\s*[a-zA-Z][\w:-]*/
 const closingBracketRegex = /\/?\s*>$/
 
 export const parseAttributes = (token: string): Record<string, string> => {
-  const withoutTag = token
-    .replace(openingTagRegex, '')
-    .replace(closingBracketRegex, '')
-    .trim()
+  const withoutTag = token.replace(openingTagRegex, '').replace(closingBracketRegex, '').trim()
 
   if (!withoutTag) {
     return Object.create(null) as Record<string, string>
