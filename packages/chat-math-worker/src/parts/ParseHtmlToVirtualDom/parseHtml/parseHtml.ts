@@ -1,4 +1,5 @@
-import type { HtmlElementNode, HtmlNode } from '../HtmlNodeTypes.ts'
+import type { HtmlElementNode } from '../HtmlNodeTypes/HtmlElementNode.ts'
+import type { HtmlNode } from '../HtmlNodeTypes/HtmlNode.ts'
 import { decodeEntities } from '../decodeEntities/decodeEntities.ts'
 import { parseAttributes } from '../parseAttributes/parseAttributes.ts'
 import { sanitizeHtml } from '../sanitizeHtml/sanitizeHtml.ts'

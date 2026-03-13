@@ -1,5 +1,5 @@
 import { type VirtualDomNode, text } from '@lvce-editor/virtual-dom-worker'
-import type { ReadonlyHtmlNode } from '../HtmlNodeTypes.ts'
+import type { ReadonlyHtmlNode } from '../HtmlNodeTypes/ReadonlyHtmlNode.ts'
 import { getElementAttributes } from '../getElementAttributes/getElementAttributes.ts'
 import { getElementType } from '../getElementType/getElementType.ts'
 
