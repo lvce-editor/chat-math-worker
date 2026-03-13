@@ -44,7 +44,10 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
+    "@lvce-editor/constants": "^5.3.0",
+    "@lvce-editor/i18n": "^2.1.0",
     "@lvce-editor/rpc": "^6.4.0",
+    "@lvce-editor/virtual-dom-worker": "^8.13.0",
     "jest": "^30.3.0",
     "katex": "^0.16.38",
     "ts-jest": "^29.4.6"
