@@ -51,7 +51,7 @@ test('normalizeUrl should keep only http(s) urls', () => {
 })
 
 test('parseAttributes should support single quoted unquoted and boolean attributes', () => {
-  const result = parseAttributes("<input VALUE=test title='Tom &amp; Jerry' disabled readonly onFocus=\"x\">")
+  const result = parseAttributes('<input VALUE=test title=\'Tom &amp; Jerry\' disabled readonly onFocus="x">')
 
   expect(result).toEqual({
     disabled: '',
