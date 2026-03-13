@@ -3,7 +3,8 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
-import { getMathBlockDom, getMathInlineDom } from '../src/parts/GetMathDom/GetMathDom.ts'
+import { getMathBlockDom } from '../src/parts/GetMathBlockDom/GetMathBlockDom.ts'
+import { getMathInlineDom } from '../src/parts/GetMathInlineDom/GetMathInlineDom.ts'
 
 test('getMathInlineDom renders valid inline math', () => {
   const result = getMathInlineDom({
