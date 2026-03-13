@@ -4,6 +4,6 @@ import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
 
 export const commandMap = {
   'ChatMath.getMathBlockDom': getMathBlockDom,
-  'chatMath.getMathInlineDom': getMathInlineDom,
+  'ChatMath.getMathInlineDom': getMathInlineDom,
   'HandleMessagePort.handleMessagePort': handleMessagePort,
 }
