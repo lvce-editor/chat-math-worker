@@ -46,6 +46,7 @@
     "@jest/globals": "^30.3.0",
     "@lvce-editor/rpc": "^6.4.0",
     "jest": "^30.3.0",
+    "katex": "^0.16.38",
     "ts-jest": "^29.4.6"
   }
 }
