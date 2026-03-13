@@ -1,6 +1,6 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
-import { parseHtml } from './ParseHtml.ts'
-import { toVirtualDom } from './ToVirtualDom.ts'
+import { parseHtml } from '../ParseHtml/ParseHtml.ts'
+import { toVirtualDom } from '../ToVirtualDom/ToVirtualDom.ts'
 
 export const parseHtmlToVirtualDomWithRootCount = (
   value: string,

@@ -1,4 +1,4 @@
-import type { HtmlNode } from './HtmlNode.ts'
+import type { HtmlNode } from '../HtmlNode/HtmlNode.ts'
 
 export interface HtmlElementNode {
   readonly attributes: Record<string, string>

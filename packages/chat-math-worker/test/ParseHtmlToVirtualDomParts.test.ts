@@ -1,13 +1,13 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { decodeEntities } from '../src/parts/ParseHtmlToVirtualDom/DecodeEntities.ts'
-import { getElementAttributes } from '../src/parts/ParseHtmlToVirtualDom/GetElementAttributes.ts'
-import { getElementType } from '../src/parts/ParseHtmlToVirtualDom/GetElementType.ts'
-import { normalizeUrl } from '../src/parts/ParseHtmlToVirtualDom/NormalizeUrl.ts'
-import { parseAttributes } from '../src/parts/ParseHtmlToVirtualDom/ParseAttributes.ts'
-import { parseHtml } from '../src/parts/ParseHtmlToVirtualDom/ParseHtml.ts'
-import { sanitizeHtml } from '../src/parts/ParseHtmlToVirtualDom/SanitizeHtml.ts'
-import { toVirtualDom } from '../src/parts/ParseHtmlToVirtualDom/ToVirtualDom.ts'
+import { decodeEntities } from '../src/parts/DecodeEntities/DecodeEntities.ts'
+import { getElementAttributes } from '../src/parts/GetElementAttributes/GetElementAttributes.ts'
+import { getElementType } from '../src/parts/GetElementType/GetElementType.ts'
+import { normalizeUrl } from '../src/parts/NormalizeUrl/NormalizeUrl.ts'
+import { parseAttributes } from '../src/parts/ParseAttributes/ParseAttributes.ts'
+import { parseHtml } from '../src/parts/ParseHtml/ParseHtml.ts'
+import { sanitizeHtml } from '../src/parts/SanitizeHtml/SanitizeHtml.ts'
+import { toVirtualDom } from '../src/parts/ToVirtualDom/ToVirtualDom.ts'
 
 test('decodeEntities should decode known HTML entities', () => {
   const result = decodeEntities('&lt;div&gt;Tom &amp; Jerry&nbsp;&quot;Hi&quot;&#39;!')

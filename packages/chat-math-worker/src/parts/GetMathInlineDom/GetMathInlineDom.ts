@@ -1,7 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import type { MessageMathInlineNode } from '../../ParseMessageContentTypes/ParseMessageContentTypes.ts'
-import * as ClassNames from '../../ClassNames/ClassNames.ts'
-import { renderMath } from './RenderMath.ts'
+import type { MessageMathInlineNode } from '../ParseMessageContentTypes/ParseMessageContentTypes.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
+import { renderMath } from '../RenderMath/RenderMath.ts'
 
 export const getMathInlineDom = (node: MessageMathInlineNode): readonly VirtualDomNode[] => {
   const rendered = renderMath(node.text, node.displayMode)
