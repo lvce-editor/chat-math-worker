@@ -1,0 +1,5 @@
+export type { HtmlElementNode } from '../HtmlNodeTypes/HtmlElementNode.ts'
+export type { HtmlNode } from '../HtmlNodeTypes/HtmlNode.ts'
+export type { HtmlTextNode } from '../HtmlNodeTypes/HtmlTextNode.ts'
+export type { ReadonlyHtmlElementNode } from '../HtmlNodeTypes/ReadonlyHtmlElementNode.ts'
+export type { ReadonlyHtmlNode } from '../HtmlNodeTypes/ReadonlyHtmlNode.ts'
