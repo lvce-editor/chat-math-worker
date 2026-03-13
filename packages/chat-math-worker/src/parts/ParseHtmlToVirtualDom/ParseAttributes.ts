@@ -1,4 +1,4 @@
-import { decodeEntities } from '../decodeEntities/decodeEntities.ts'
+import { decodeEntities } from './DecodeEntities.ts'
 
 const attributeRegex = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g
 const openingTagRegex = /^<\/?\s*[a-zA-Z][\w:-]*/

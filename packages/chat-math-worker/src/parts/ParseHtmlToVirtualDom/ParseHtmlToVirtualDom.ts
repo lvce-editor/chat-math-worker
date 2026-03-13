@@ -1,2 +1,9 @@
-export { parseHtmlToVirtualDom } from './parseHtmlToVirtualDom/parseHtmlToVirtualDom.ts'
-export { parseHtmlToVirtualDomWithRootCount } from './parseHtmlToVirtualDomWithRootCount/parseHtmlToVirtualDomWithRootCount.ts'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { parseHtml } from './ParseHtml.ts'
+import { toVirtualDom } from './ToVirtualDom.ts'
+
+export const parseHtmlToVirtualDom = (value: string): readonly VirtualDomNode[] => {
+	return parseHtml(value).flatMap(toVirtualDom)
+}
+
+export { parseHtmlToVirtualDomWithRootCount } from './ParseHtmlToVirtualDomWithRootCount.ts'

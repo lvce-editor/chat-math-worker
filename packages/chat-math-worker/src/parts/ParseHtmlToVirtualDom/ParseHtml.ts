@@ -1,8 +1,8 @@
 import type { HtmlElementNode } from '../HtmlNodeTypes/HtmlElementNode.ts'
 import type { HtmlNode } from '../HtmlNodeTypes/HtmlNode.ts'
-import { decodeEntities } from '../decodeEntities/decodeEntities.ts'
-import { parseAttributes } from '../parseAttributes/parseAttributes.ts'
-import { sanitizeHtml } from '../sanitizeHtml/sanitizeHtml.ts'
+import { decodeEntities } from './DecodeEntities.ts'
+import { parseAttributes } from './ParseAttributes.ts'
+import { sanitizeHtml } from './SanitizeHtml.ts'
 
 const tokenRegex = /<!--[\s\S]*?-->|<\/?[a-zA-Z][\w:-]*(?:\s[^<>]*?)?>|[^<]+/g
 const openTagNameRegex = /^<\s*([a-zA-Z][\w:-]*)/

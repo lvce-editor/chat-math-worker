@@ -1,5 +1,5 @@
 import type { ReadonlyHtmlElementNode } from '../HtmlNodeTypes/ReadonlyHtmlElementNode.ts'
-import { normalizeUrl } from '../normalizeUrl/normalizeUrl.ts'
+import { normalizeUrl } from './NormalizeUrl.ts'
 
 export const getElementAttributes = (node: ReadonlyHtmlElementNode): Record<string, unknown> => {
   const attributes: Record<string, unknown> = {}

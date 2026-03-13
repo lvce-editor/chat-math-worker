@@ -1,2 +1,2 @@
-export { getMathInlineDom } from './getMathInlineDom/getMathInlineDom.ts'
-export { getMathBlockDom } from './getMathBlockDom/getMathBlockDom.ts'
+export { getMathInlineDom } from './GetMathInlineDom.ts'
+export { getMathBlockDom } from './GetMathBlockDom.ts'

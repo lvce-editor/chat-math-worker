@@ -2,7 +2,7 @@
 
 import { type VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import katex from 'katex'
-import { parseHtmlToVirtualDomWithRootCount } from '../../ParseHtmlToVirtualDom/ParseHtmlToVirtualDom.ts'
+import { parseHtmlToVirtualDomWithRootCount } from '../ParseHtmlToVirtualDom/ParseHtmlToVirtualDom.ts'
 
 export const renderMath = (
   value: string,

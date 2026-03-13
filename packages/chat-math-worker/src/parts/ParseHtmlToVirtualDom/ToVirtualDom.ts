@@ -1,7 +1,7 @@
 import { type VirtualDomNode, text } from '@lvce-editor/virtual-dom-worker'
 import type { ReadonlyHtmlNode } from '../HtmlNodeTypes/ReadonlyHtmlNode.ts'
-import { getElementAttributes } from '../getElementAttributes/getElementAttributes.ts'
-import { getElementType } from '../getElementType/getElementType.ts'
+import { getElementAttributes } from './GetElementAttributes.ts'
+import { getElementType } from './GetElementType.ts'
 
 export const toVirtualDom = (node: ReadonlyHtmlNode): readonly VirtualDomNode[] => {
   if (node.type === 'text') {
