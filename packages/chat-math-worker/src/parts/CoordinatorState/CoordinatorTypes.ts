@@ -1,4 +1,4 @@
-export interface ChatCoordinatorMessage {
+export interface chatMathMessage {
   readonly id: string
   readonly inProgress?: boolean
   readonly role: 'assistant' | 'tool' | 'user'
@@ -6,29 +6,29 @@ export interface ChatCoordinatorMessage {
   readonly time: string
 }
 
-export interface ChatCoordinatorSession {
+export interface chatMathSession {
   readonly id: string
-  readonly messages: readonly ChatCoordinatorMessage[]
+  readonly messages: readonly chatMathMessage[]
   readonly title: string
 }
 
-export interface ChatCoordinatorSessionSummary {
+export interface chatMathSessionSummary {
   readonly id: string
   readonly messageCount: number
   readonly title: string
 }
 
-export interface ChatCoordinatorSubmitOptions {
+export interface chatMathSubmitOptions {
   readonly sessionId?: string
   readonly text: string
 }
 
-export interface ChatCoordinatorSubmitErrorResult {
+export interface chatMathSubmitErrorResult {
   readonly message: string
   readonly type: 'error'
 }
 
-export interface ChatCoordinatorSubmitSuccessResult {
+export interface chatMathSubmitSuccessResult {
   readonly assistantMessageId: string
   readonly runId: string
   readonly sessionId: string
@@ -36,61 +36,61 @@ export interface ChatCoordinatorSubmitSuccessResult {
   readonly userMessageId: string
 }
 
-export type ChatCoordinatorSubmitResult = ChatCoordinatorSubmitErrorResult | ChatCoordinatorSubmitSuccessResult
+export type chatMathSubmitResult = chatMathSubmitErrorResult | chatMathSubmitSuccessResult
 
-export interface ChatCoordinatorSessionCreatedEvent {
-  readonly session: ChatCoordinatorSession
+export interface chatMathSessionCreatedEvent {
+  readonly session: chatMathSession
   readonly type: 'session-created'
 }
 
-export interface ChatCoordinatorSessionDeletedEvent {
+export interface chatMathSessionDeletedEvent {
   readonly sessionId: string
   readonly type: 'session-deleted'
 }
 
-export interface ChatCoordinatorSessionUpdatedEvent {
-  readonly session: ChatCoordinatorSession
+export interface chatMathSessionUpdatedEvent {
+  readonly session: chatMathSession
   readonly type: 'session-updated'
 }
 
-export interface ChatCoordinatorMessageAppendedEvent {
-  readonly message: ChatCoordinatorMessage
+export interface chatMathMessageAppendedEvent {
+  readonly message: chatMathMessage
   readonly sessionId: string
   readonly type: 'message-appended'
 }
 
-export interface ChatCoordinatorMessageUpdatedEvent {
-  readonly message: ChatCoordinatorMessage
+export interface chatMathMessageUpdatedEvent {
+  readonly message: chatMathMessage
   readonly runId: string
   readonly sessionId: string
   readonly type: 'message-updated'
 }
 
-export interface ChatCoordinatorRunStartedEvent {
+export interface chatMathRunStartedEvent {
   readonly assistantMessageId: string
   readonly runId: string
   readonly sessionId: string
   readonly type: 'run-started'
 }
 
-export interface ChatCoordinatorRunFinishedEvent {
+export interface chatMathRunFinishedEvent {
   readonly runId: string
   readonly sessionId: string
   readonly type: 'run-finished'
 }
 
-export interface ChatCoordinatorRunCancelledEvent {
+export interface chatMathRunCancelledEvent {
   readonly runId: string
   readonly sessionId: string
   readonly type: 'run-cancelled'
 }
 
-export type ChatCoordinatorEvent =
-  | ChatCoordinatorMessageAppendedEvent
-  | ChatCoordinatorMessageUpdatedEvent
-  | ChatCoordinatorRunCancelledEvent
-  | ChatCoordinatorRunFinishedEvent
-  | ChatCoordinatorRunStartedEvent
-  | ChatCoordinatorSessionCreatedEvent
-  | ChatCoordinatorSessionDeletedEvent
-  | ChatCoordinatorSessionUpdatedEvent
+export type chatMathEvent =
+  | chatMathMessageAppendedEvent
+  | chatMathMessageUpdatedEvent
+  | chatMathRunCancelledEvent
+  | chatMathRunFinishedEvent
+  | chatMathRunStartedEvent
+  | chatMathSessionCreatedEvent
+  | chatMathSessionDeletedEvent
+  | chatMathSessionUpdatedEvent

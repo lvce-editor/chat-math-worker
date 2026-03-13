@@ -1,14 +1,14 @@
 import type {
-  ChatCoordinatorEvent,
-  ChatCoordinatorMessage,
-  ChatCoordinatorSession,
-  ChatCoordinatorSessionSummary,
-  ChatCoordinatorSubmitOptions,
-  ChatCoordinatorSubmitResult,
+  chatMathEvent,
+  chatMathMessage,
+  chatMathSession,
+  chatMathSessionSummary,
+  chatMathSubmitOptions,
+  chatMathSubmitResult,
 } from './CoordinatorTypes.ts'
 
-const sessions: ChatCoordinatorSession[] = []
-const subscriberQueues = new Map<string, ChatCoordinatorEvent[]>()
+const sessions: chatMathSession[] = []
+const subscriberQueues = new Map<string, chatMathEvent[]>()
 const subscriberWaiters = new Map<string, Array<() => void>>()
 const activeRunBySessionId = new Map<string, string>()
 const runById = new Map<string, { readonly assistantMessageId: string; readonly sessionId: string }>()
@@ -23,7 +23,7 @@ const getSessionIndex = (sessionId: string): number => {
   return sessions.findIndex((session) => session.id === sessionId)
 }
 
-const emitEvent = (event: ChatCoordinatorEvent): void => {
+const emitEvent = (event: chatMathEvent): void => {
   for (const queue of subscriberQueues.values()) {
     queue.push(clone(event))
   }
@@ -40,7 +40,7 @@ const emitEvent = (event: ChatCoordinatorEvent): void => {
   }
 }
 
-const createMessage = (role: 'assistant' | 'tool' | 'user', text: string): ChatCoordinatorMessage => {
+const createMessage = (role: 'assistant' | 'tool' | 'user', text: string): chatMathMessage => {
   return {
     id: crypto.randomUUID(),
     role,
@@ -49,7 +49,7 @@ const createMessage = (role: 'assistant' | 'tool' | 'user', text: string): ChatC
   }
 }
 
-const updateMessage = (sessionId: string, messageId: string, text: string, inProgress: boolean): ChatCoordinatorMessage | undefined => {
+const updateMessage = (sessionId: string, messageId: string, text: string, inProgress: boolean): chatMathMessage | undefined => {
   const index = getSessionIndex(sessionId)
   if (index === -1) {
     return undefined
@@ -76,7 +76,7 @@ const updateMessage = (sessionId: string, messageId: string, text: string, inPro
   return updatedMessage
 }
 
-const appendMessage = (sessionId: string, message: ChatCoordinatorMessage): boolean => {
+const appendMessage = (sessionId: string, message: chatMathMessage): boolean => {
   const index = getSessionIndex(sessionId)
   if (index === -1) {
     return false
@@ -160,7 +160,7 @@ const processRun = async (runId: string, sessionId: string, assistantMessageId: 
   finalizeRun(runId, sessionId)
 }
 
-export const listSessions = (): readonly ChatCoordinatorSessionSummary[] => {
+export const listSessions = (): readonly chatMathSessionSummary[] => {
   return sessions.map((session) => ({
     id: session.id,
     messageCount: session.messages.length,
@@ -168,7 +168,7 @@ export const listSessions = (): readonly ChatCoordinatorSessionSummary[] => {
   }))
 }
 
-export const getSession = (sessionId: string): ChatCoordinatorSession | undefined => {
+export const getSession = (sessionId: string): chatMathSession | undefined => {
   const session = sessions.find((item) => item.id === sessionId)
   if (!session) {
     return undefined
@@ -176,8 +176,8 @@ export const getSession = (sessionId: string): ChatCoordinatorSession | undefine
   return clone(session)
 }
 
-export const createSession = (title: string = `Chat ${sessions.length + 1}`): ChatCoordinatorSession => {
-  const session: ChatCoordinatorSession = {
+export const createSession = (title: string = `Chat ${sessions.length + 1}`): chatMathSession => {
+  const session: chatMathSession = {
     id: crypto.randomUUID(),
     messages: [],
     title,
@@ -203,7 +203,7 @@ export const deleteSession = (sessionId: string): boolean => {
   return true
 }
 
-export const submit = (options: Readonly<ChatCoordinatorSubmitOptions>): ChatCoordinatorSubmitResult => {
+export const submit = (options: Readonly<chatMathSubmitOptions>): chatMathSubmitResult => {
   const text = options.text.trim()
   if (!text) {
     return {
@@ -225,7 +225,7 @@ export const submit = (options: Readonly<ChatCoordinatorSubmitOptions>): ChatCoo
   }
 
   const userMessage = createMessage('user', text)
-  const assistantMessage: ChatCoordinatorMessage = {
+  const assistantMessage: chatMathMessage = {
     ...createMessage('assistant', ''),
     inProgress: true,
   }
@@ -294,7 +294,7 @@ export const unsubscribe = (subscriberId: string): void => {
   subscriberWaiters.delete(subscriberId)
 }
 
-export const consumeEvents = (subscriberId: string): readonly ChatCoordinatorEvent[] => {
+export const consumeEvents = (subscriberId: string): readonly chatMathEvent[] => {
   const queue = subscriberQueues.get(subscriberId)
   if (!queue) {
     return []
@@ -304,7 +304,7 @@ export const consumeEvents = (subscriberId: string): readonly ChatCoordinatorEve
   return events
 }
 
-export const waitForEvents = async (subscriberId: string, timeout: number = 1000): Promise<readonly ChatCoordinatorEvent[]> => {
+export const waitForEvents = async (subscriberId: string, timeout: number = 1000): Promise<readonly chatMathEvent[]> => {
   const queue = subscriberQueues.get(subscriberId)
   if (!queue) {
     return []

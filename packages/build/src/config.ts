@@ -7,6 +7,6 @@ export const instantiations = 200_000
 
 export const instantiationsPath = join(root, 'packages', 'chat-math-worker')
 
-export const workerPath = join(root, '.tmp/dist-chat-math-worker/dist/chatCoordinatorWorkerMain.js')
+export const workerPath = join(root, '.tmp/dist-chat-math-worker/dist/chatMathWorkerMain.js')
 
 export const playwrightPath = new URL('../../e2e/node_modules/playwright/index.mjs', import.meta.url).toString()
