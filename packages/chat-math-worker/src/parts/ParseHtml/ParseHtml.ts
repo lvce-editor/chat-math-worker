@@ -17,66 +17,66 @@ const createRootNode = (): HtmlElementNode => {
   }
 }
 
-const closeTag = (stack: HtmlElementNode[], token: string): void => {
-  const closingTagName = token.slice(2, -1).trim().toLowerCase()
-  while (stack.length > 1) {
-    const top = stack.at(-1)
-    if (!top) {
-      return
-    }
-    stack.pop()
-    if (top.tagName === closingTagName) {
-      return
-    }
-  }
-}
-
-const openTag = (stack: HtmlElementNode[], token: string): void => {
-  const openTagNameMatch = openTagNameRegex.exec(token)
-  if (!openTagNameMatch) {
-    return
-  }
-
-  const tagName = openTagNameMatch[1].toLowerCase()
-  const parent = stack.at(-1)
-  if (!parent) {
-    return
-  }
-
-  const elementNode: HtmlElementNode = {
-    attributes: parseAttributes(token),
-    children: [],
-    tagName,
-    type: 'element',
-  }
-
-  parent.children.push(elementNode)
-
-  if (!token.endsWith('/>') && !voidElements.has(tagName)) {
-    stack.push(elementNode)
-  }
-}
-
-const appendTextNode = (stack: HtmlElementNode[], token: string): void => {
-  const decoded = decodeEntities(token)
-  if (!decoded) {
-    return
-  }
-
-  const parent = stack.at(-1)
-  if (!parent) {
-    return
-  }
-
-  parent.children.push({
-    type: 'text',
-    value: decoded,
-  })
-}
-
 export const parseHtml = (value: string): readonly HtmlNode[] => {
   const root = createRootNode()
   const stack: HtmlElementNode[] = [root]
+
+  const closeTag = (token: string): void => {
+    const closingTagName = token.slice(2, -1).trim().toLowerCase()
+    while (stack.length > 1) {
+      const top = stack.at(-1)
+      if (!top) {
+        return
+      }
+      stack.pop()
+      if (top.tagName === closingTagName) {
+        return
+      }
+    }
+  }
+
+  const openTag = (token: string): void => {
+    const openTagNameMatch = openTagNameRegex.exec(token)
+    if (!openTagNameMatch) {
+      return
+    }
+
+    const tagName = openTagNameMatch[1].toLowerCase()
+    const parent = stack.at(-1)
+    if (!parent) {
+      return
+    }
+
+    const elementNode: HtmlElementNode = {
+      attributes: parseAttributes(token),
+      children: [],
+      tagName,
+      type: 'element',
+    }
+
+    parent.children.push(elementNode)
+
+    if (!token.endsWith('/>') && !voidElements.has(tagName)) {
+      stack.push(elementNode)
+    }
+  }
+
+  const appendTextNode = (token: string): void => {
+    const decoded = decodeEntities(token)
+    if (!decoded) {
+      return
+    }
+
+    const parent = stack.at(-1)
+    if (!parent) {
+      return
+    }
+
+    parent.children.push({
+      type: 'text',
+      value: decoded,
+    })
+  }
 
   const matches = sanitizeHtml(value).match(tokenRegex)
   if (!matches) {
@@ -89,16 +89,16 @@ export const parseHtml = (value: string): readonly HtmlNode[] => {
     }
 
     if (token.startsWith('</')) {
-      closeTag(stack, token)
+      closeTag(token)
       continue
     }
 
     if (token.startsWith('<')) {
-      openTag(stack, token)
+      openTag(token)
       continue
     }
 
-    appendTextNode(stack, token)
+    appendTextNode(token)
   }
 
   return root.children

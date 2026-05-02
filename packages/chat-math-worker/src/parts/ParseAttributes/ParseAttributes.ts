@@ -2,9 +2,10 @@ import { decodeEntities } from '../DecodeEntities/DecodeEntities.ts'
 
 const openingTagRegex = /^<\/?\s*[a-zA-Z][\w:-]*/
 const closingBracketRegex = /\/?\s*>$/
+const whitespaceRegex = /\s/
 
 const isWhitespace = (value: string): boolean => {
-  return /\s/.test(value)
+  return whitespaceRegex.test(value)
 }
 
 const isAttributeNameTerminator = (value: string): boolean => {
@@ -13,6 +14,69 @@ const isAttributeNameTerminator = (value: string): boolean => {
 
 const isUnquotedValueTerminator = (value: string): boolean => {
   return value === '>' || isWhitespace(value)
+}
+
+const skipWhitespace = (value: string, index: number): number => {
+  let nextIndex = index
+  while (nextIndex < value.length && isWhitespace(value[nextIndex])) {
+    nextIndex += 1
+  }
+  return nextIndex
+}
+
+const readAttributeName = (value: string, index: number): readonly [string, number] => {
+  let nextIndex = index
+  while (nextIndex < value.length && !isAttributeNameTerminator(value[nextIndex])) {
+    nextIndex += 1
+  }
+  return [value.slice(index, nextIndex).toLowerCase(), nextIndex]
+}
+
+const skipAttributeValue = (value: string, index: number): number => {
+  let nextIndex = skipWhitespace(value, index)
+  if (value[nextIndex] !== '=') {
+    return nextIndex
+  }
+
+  nextIndex = skipWhitespace(value, nextIndex + 1)
+  const quote = value[nextIndex]
+  if (quote === '"' || quote === "'") {
+    nextIndex += 1
+    while (nextIndex < value.length && value[nextIndex] !== quote) {
+      nextIndex += 1
+    }
+    return nextIndex < value.length ? nextIndex + 1 : nextIndex
+  }
+
+  while (nextIndex < value.length && !isUnquotedValueTerminator(value[nextIndex])) {
+    nextIndex += 1
+  }
+  return nextIndex
+}
+
+const readAttributeValue = (value: string, index: number): readonly [string, number] => {
+  let nextIndex = skipWhitespace(value, index)
+  if (value[nextIndex] !== '=') {
+    return ['', nextIndex]
+  }
+
+  nextIndex = skipWhitespace(value, nextIndex + 1)
+  const quote = value[nextIndex]
+  if (quote === '"' || quote === "'") {
+    const valueStart = nextIndex + 1
+    nextIndex = valueStart
+    while (nextIndex < value.length && value[nextIndex] !== quote) {
+      nextIndex += 1
+    }
+    const attributeValue = value.slice(valueStart, nextIndex)
+    return [attributeValue, nextIndex < value.length ? nextIndex + 1 : nextIndex]
+  }
+
+  const valueStart = nextIndex
+  while (nextIndex < value.length && !isUnquotedValueTerminator(value[nextIndex])) {
+    nextIndex += 1
+  }
+  return [value.slice(valueStart, nextIndex), nextIndex]
 }
 
 export const parseAttributes = (token: string): Record<string, string> => {
@@ -26,54 +90,18 @@ export const parseAttributes = (token: string): Record<string, string> => {
   let index = 0
 
   while (index < withoutTag.length) {
-    while (index < withoutTag.length && isWhitespace(withoutTag[index])) {
-      index += 1
-    }
+    index = skipWhitespace(withoutTag, index)
+    const [name, nextIndex] = readAttributeName(withoutTag, index)
+    index = nextIndex
 
-    const nameStart = index
-    while (index < withoutTag.length && !isAttributeNameTerminator(withoutTag[index])) {
-      index += 1
-    }
-
-    const name = withoutTag.slice(nameStart, index).toLowerCase()
     if (!name || name.startsWith('on')) {
-      while (index < withoutTag.length && !isWhitespace(withoutTag[index])) {
-        index += 1
-      }
+      index = skipAttributeValue(withoutTag, index)
       continue
     }
 
-    while (index < withoutTag.length && isWhitespace(withoutTag[index])) {
-      index += 1
-    }
-
-    let value = ''
-    if (withoutTag[index] === '=') {
-      index += 1
-      while (index < withoutTag.length && isWhitespace(withoutTag[index])) {
-        index += 1
-      }
-
-      const quote = withoutTag[index]
-      if (quote === '"' || quote === "'") {
-        index += 1
-        const valueStart = index
-        while (index < withoutTag.length && withoutTag[index] !== quote) {
-          index += 1
-        }
-        value = withoutTag.slice(valueStart, index)
-        if (index < withoutTag.length) {
-          index += 1
-        }
-      } else {
-        const valueStart = index
-        while (index < withoutTag.length && !isUnquotedValueTerminator(withoutTag[index])) {
-          index += 1
-        }
-        value = withoutTag.slice(valueStart, index)
-      }
-    }
-
+    const [attributeValue, nextValueIndex] = readAttributeValue(withoutTag, index)
+    index = nextValueIndex
+    const value = attributeValue
     attributes[name] = decodeEntities(value)
   }
 
