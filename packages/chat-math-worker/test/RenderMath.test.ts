@@ -1,7 +1,7 @@
 // cspell:ignore katex mathml
 
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { expect, test } from '@jest/globals'
-import { type VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { renderMath } from '../src/parts/RenderMath/RenderMath.ts'
 
 const getClassNames = (nodes: readonly VirtualDomNode[]): readonly string[] => {

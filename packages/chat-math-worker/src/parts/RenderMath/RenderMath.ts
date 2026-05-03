@@ -1,6 +1,6 @@
 // cspell:ignore katex
 
-import { type VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import katex from 'katex'
 import { parseHtmlToVirtualDomWithRootCount } from '../ParseHtmlToVirtualDom/ParseHtmlToVirtualDom.ts'
 
