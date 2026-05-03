@@ -54,6 +54,13 @@ const tagNameToElementType = {
   ul: VirtualDomElements.Ul,
 } as const satisfies Record<string, number>
 
+const isKnownTagName = (tagName: string): tagName is keyof typeof tagNameToElementType => {
+  return tagName in tagNameToElementType
+}
+
 export const getElementType = (tagName: string): number => {
-  return tagNameToElementType[tagName] ?? (inlineTags.has(tagName) ? VirtualDomElements.Span : VirtualDomElements.Div)
+  if (isKnownTagName(tagName)) {
+    return tagNameToElementType[tagName]
+  }
+  return inlineTags.has(tagName) ? VirtualDomElements.Span : VirtualDomElements.Div
 }
