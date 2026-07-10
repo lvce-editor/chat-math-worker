@@ -1,6 +1,7 @@
 import { decodeEntities } from '../DecodeEntities/DecodeEntities.ts'
 
 const openingTagRegex = /^<\/?\s*[a-zA-Z][\w:-]*/
+// eslint-disable-next-line sonarjs/super-linear-regex
 const closingBracketRegex = /\/?\s*>$/
 const whitespaceRegex = /\s/
 
