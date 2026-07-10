@@ -83,7 +83,7 @@ test('getMathInlineDom renders text commands without falling back', () => {
     className: ClassNames.MarkdownMathInline,
     type: VirtualDomElements.Span,
   })
-  expect(getTextNodes(result).map((text) => text.replaceAll('\u00A0', ' '))).toContain('hello world')
+  expect(getTextNodes(result).map((text) => text.replaceAll('\u{A0}', ' '))).toContain('hello world')
 })
 
 test('getMathInlineDom falls back to single-dollar text for invalid inline math', () => {
@@ -181,7 +181,7 @@ test('getMathBlockDom renders text content expressions without fallback', () => 
     className: ClassNames.MarkdownMathBlock,
     type: VirtualDomElements.Div,
   })
-  expect(getTextNodes(result).map((text) => text.replaceAll('\u00A0', ' '))).toContain('hello world')
+  expect(getTextNodes(result).map((text) => text.replaceAll('\u{A0}', ' '))).toContain('hello world')
 })
 
 test('getMathBlockDom falls back to fenced math text for invalid input', () => {

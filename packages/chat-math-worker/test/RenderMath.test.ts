@@ -45,7 +45,7 @@ test('renderMath renders text commands and preserves visible text', () => {
   const result = renderMath('\\text{hello world}', false)
 
   expect(result).toBeDefined()
-  expect(getTextNodes(result?.virtualDom ?? []).map((text) => text.replaceAll('\u00A0', ' '))).toContain('hello world')
+  expect(getTextNodes(result?.virtualDom ?? []).map((text) => text.replaceAll('\u{A0}', ' '))).toContain('hello world')
 })
 
 test('renderMath renders empty expressions', () => {

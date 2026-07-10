@@ -46,7 +46,7 @@ test('parseHtml should return top-level nodes and ignore comments', () => {
 
 test('normalizeUrl should keep only http(s) urls', () => {
   expect(normalizeUrl('https://example.com')).toBe('https://example.com')
-  expect(normalizeUrl(' http://example.com ')).toBe(' http://example.com ')
+  expect(normalizeUrl(' https://example.com ')).toBe(' https://example.com ')
   expect(normalizeUrl('javascript:alert(1)')).toBe('#')
 })
 
