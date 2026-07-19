@@ -3,17 +3,16 @@ import type { MessageMathBlockNode } from '../ParseMessageContentTypes/ParseMess
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { renderMath } from '../RenderMath/RenderMath.ts'
 
+const fallbackMathBlockNode: VirtualDomNode = {
+  childCount: 1,
+  className: ClassNames.MarkdownMathBlock,
+  type: VirtualDomElements.Div,
+}
+
 export const getMathBlockDom = (node: MessageMathBlockNode): readonly VirtualDomNode[] => {
   const rendered = renderMath(node.text, true)
   if (!rendered) {
-    return [
-      {
-        childCount: 1,
-        className: ClassNames.MarkdownMathBlock,
-        type: VirtualDomElements.Div,
-      },
-      text(`$$\n${node.text}\n$$`),
-    ]
+    return [fallbackMathBlockNode, text(`$$\n${node.text}\n$$`)]
   }
   return [
     {
