@@ -20,4 +20,10 @@ export default [
       'virtual-dom/no-object-attribute-values': 'off',
     },
   },
+  {
+    files: ['packages/chat-math-worker/test/ParseHtmlToVirtualDom.test.ts'],
+    rules: {
+      'virtual-dom/secure-links': 'off',
+    },
+  },
 ]
